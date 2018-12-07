@@ -1,0 +1,14 @@
+@import "../../styles/variables";
+
+.home{
+	background-color: $bg-pink;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.home-title{
+	margin: 0
+}

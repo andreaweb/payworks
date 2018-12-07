@@ -17,7 +17,8 @@
       {
         "ignoreUrls": true
       }
-    ]
+    ],
+    "no-console": "off"
   },
   "extends": [
     "react-app",
