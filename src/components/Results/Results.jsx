@@ -22,11 +22,11 @@ function desc(a, b, orderBy) {
 
 function stableSort(array, cmp) {
 	const stabilizedThis = array.map((el, index) => [el, index]);
-	console.log(stabilizedThis.sort((a, b) => {
+	stabilizedThis.sort((a, b) => {
 		const order = cmp(a[0], b[0]);
 		if (order !== 0) return order;
 		return a[1] - b[1];
-	}));
+	});
 	return stabilizedThis.map(el => el[0]);
 }
 
@@ -45,8 +45,8 @@ const rows = [
 
 class Results extends Component {
 	state = {
-		order: 'asc',
-		orderBy: 'issues',
+		order: 'desc',
+		orderBy: 'open_issues',
 		page: 0,
 		rowsPerPage: 10,
 	}
@@ -68,11 +68,11 @@ class Results extends Component {
 		return (
 			<main>
 				{this.props.repos &&
-					<section>
-						Showing results of {this.props.repos[0].owner.login} (click to change)
-						<Paper>
-							<div>
-								<Table aria-labelledby="tableTitle">
+				<section>
+					Showing results of {this.props.repos[0].owner.login} (click to change)
+					<Paper>
+						<div>
+							<Table aria-labelledby="tableTitle">
 								<TableHead>
 									<TableRow>
 										{rows.map(row => {
@@ -101,31 +101,31 @@ class Results extends Component {
 										}, this)}
 									</TableRow>
 								</TableHead>
-									<TableBody>
-										{ stableSort(this.props.repos, getSorting(order, orderBy))
-											.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-											.map(repo => {
-												return (
-													<TableRow
-														hover
-														key={repo.id}
-														tabIndex={-1}
-														role="checkbox"
-													>
-														<TableCell component="th" scope="row">
-															{repo.name}
-														</TableCell>
-														<TableCell numeric>{repo.forks_count}</TableCell>
-														<TableCell numeric>{repo.open_issues_count}</TableCell>
-														<TableCell numeric>{repo.stargazers_count}</TableCell>
-													</TableRow>
-												);
-											})}
-									</TableBody>
-								</Table>
-							</div>
-						</Paper>
-					</section>
+								<TableBody>
+									{ stableSort(this.props.repos, getSorting(order, orderBy))
+										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+										.map(repo => {
+											return (
+												<TableRow
+													hover
+													key={repo.id}
+													tabIndex={-1}
+													role="checkbox"
+												>
+													<TableCell component="th" className="repo-name" scope="row">
+														{repo.name}
+													</TableCell>
+													<TableCell numeric>{repo.forks_count}</TableCell>
+													<TableCell numeric>{repo.open_issues_count}</TableCell>
+													<TableCell numeric>{repo.stargazers_count}</TableCell>
+												</TableRow>
+											);
+										})}
+								</TableBody>
+							</Table>
+						</div>
+					</Paper>
+				</section>
 				}
 				{!this.props.repos && <p>An error ocurred</p>}
 			</main>
@@ -134,13 +134,7 @@ class Results extends Component {
 }
 
 Results.propTypes = {
-	repos: PropTypes.array,
-	numSelected: PropTypes.number.isRequired,
-	onRequestSort: PropTypes.func.isRequired,
-	onSelectAllClick: PropTypes.func.isRequired,
-	order: PropTypes.string.isRequired,
-	orderBy: PropTypes.string.isRequired,
-	rowCount: PropTypes.number.isRequired,
+	repos: PropTypes.array
 };
 
 export default Results;

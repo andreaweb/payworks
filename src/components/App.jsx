@@ -739,7 +739,7 @@ class App extends Component {
         }
       }
     ], 
-    toResults: false
+    toResults: true
   }
   handleChange = (e) => {
     this.setState({org: e.target.value});
