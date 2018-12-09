@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import './Home.scss';
 
 class Home extends Component {
@@ -12,8 +13,8 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="home">
-        <main className="home-content">
+      <main className="home">
+        <section className="home-content">
           <h1 className="home-title">Search for an organization</h1>
           <h2>to see its repos in Github</h2>
           <TextField
@@ -24,9 +25,14 @@ class Home extends Component {
             margin="normal"
             variant="outlined"
           />
-          <button type="submit" onClick={this.handleSubmit}>GO</button>
-        </main>
-      </div>
+          <Button type="submit"
+          variant="contained"
+          style={{marginTop: '25px', marginLeft: '25px'}} 
+          onClick={this.handleSubmit}>
+          GO
+          </Button>
+        </section>
+      </main>
     );
   }
 }

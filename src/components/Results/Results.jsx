@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 import './Results.scss';
 
 function desc(a, b, orderBy) {
@@ -37,6 +38,24 @@ function getSorting(order, orderBy) {
 	: (a, b) => -desc(a, b, orderBy);
 }
 
+const styles = theme => ({
+	overrides:{
+		palette: {
+			primary: '#fff',
+			secondary: '#000',
+		},
+		MuiInputBase: {
+			root:{
+				border: '1px solid #000',
+				color:'#fff',
+				'&$focused': {
+          borderColor: 'transparent'
+        }
+			}
+		}
+	}
+});
+
 const rows = [
 	{ id: 'name', numeric: false, disablePadding: false, label: 'Repo Name' },
 	{ id: 'language', numeric: false, disablePadding: false, label: 'Programming Language' },
@@ -54,38 +73,42 @@ class Results extends Component {
 		rowsPerPage: 10,
 	}
 	createSortHandler = property => event => {
-    this.handleRequestSort(event, property);
-  };
-  handleSearch = (e) => {
+		this.handleRequestSort(event, property);
+	};
+	handleSearch = (e) => {
 		const lowerCase = e.target.value.toLowerCase();
 		this.setState({query: lowerCase});
-  }
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = 'desc';
+	}
+	handleRequestSort = (event, property) => {
+		const orderBy = property;
+		let order = 'desc';
 
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
-    }
-    this.setState({ order, orderBy });
-  };
+		if (this.state.orderBy === property && this.state.order === 'desc') {
+			order = 'asc';
+		}
+		this.setState({ order, orderBy });
+	};
 	render() {
 		const { rowsPerPage, page, order, orderBy } = this.state;
 		return (
 			<main>
 				{this.props.repos &&
 				<section>
-					Showing results of {this.props.repos[0].owner.login} (click to change)
-					<TextField
-            label="Search by Language"
-            name="filter"
-            value={this.state.query}
-            onChange={this.handleSearch}
-            margin="normal"
-            variant="outlined"
-          />
+					<div className="row">
+						<h2>
+						Showing results of {this.props.repos[0].owner.login} (click to change)
+						</h2>
+						<TextField
+							label="Search by Language"
+							name="filter"
+							value={this.state.query}
+							onChange={this.handleSearch}
+							margin="normal"
+							variant="outlined"
+						/>
+					</div>
 					<Paper>
-						<div>
+						<div className="table-container">
 							<Table aria-labelledby="tableTitle">
 								<TableHead>
 									<TableRow>
@@ -155,4 +178,4 @@ Results.propTypes = {
 	repos: PropTypes.array
 };
 
-export default Results;
+export default withStyles(styles)(Results);
