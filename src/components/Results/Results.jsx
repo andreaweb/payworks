@@ -38,6 +38,7 @@ function getSorting(order, orderBy) {
 
 const rows = [
 	{ id: 'name', numeric: false, disablePadding: false, label: 'Repo Name' },
+	{ id: 'language', numeric: false, disablePadding: false, label: 'Programming Language' },
 	{ id: 'forks', numeric: true, disablePadding: false, label: 'Forks' },
 	{ id: 'open_issues', numeric: true, disablePadding: false, label: 'Issues' },
 	{ id: 'stargazers_count', numeric: true, disablePadding: false, label: 'Stars' }
@@ -114,6 +115,9 @@ class Results extends Component {
 												>
 													<TableCell component="th" className="repo-name" scope="row">
 														{repo.name}
+													</TableCell>
+													<TableCell component="th" scope="row">
+														{repo.language}
 													</TableCell>
 													<TableCell numeric>{repo.forks_count}</TableCell>
 													<TableCell numeric>{repo.open_issues_count}</TableCell>
