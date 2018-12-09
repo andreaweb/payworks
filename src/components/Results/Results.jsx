@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -48,12 +49,17 @@ class Results extends Component {
 	state = {
 		order: 'desc',
 		orderBy: 'open_issues',
+		query: '',
 		page: 0,
 		rowsPerPage: 10,
 	}
 	createSortHandler = property => event => {
     this.handleRequestSort(event, property);
   };
+  handleSearch = (e) => {
+		const lowerCase = e.target.value.toLowerCase();
+		this.setState({query: lowerCase});
+  }
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
@@ -61,7 +67,6 @@ class Results extends Component {
     if (this.state.orderBy === property && this.state.order === 'desc') {
       order = 'asc';
     }
-    console.log(order, orderBy);
     this.setState({ order, orderBy });
   };
 	render() {
@@ -71,6 +76,14 @@ class Results extends Component {
 				{this.props.repos &&
 				<section>
 					Showing results of {this.props.repos[0].owner.login} (click to change)
+					<TextField
+            label="Search by Language"
+            name="filter"
+            value={this.state.query}
+            onChange={this.handleSearch}
+            margin="normal"
+            variant="outlined"
+          />
 					<Paper>
 						<div>
 							<Table aria-labelledby="tableTitle">
@@ -104,6 +117,7 @@ class Results extends Component {
 								</TableHead>
 								<TableBody>
 									{ stableSort(this.props.repos, getSorting(order, orderBy))
+										.filter((r) => r.language.toLowerCase().includes(this.state.query))
 										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 										.map(repo => {
 											return (
