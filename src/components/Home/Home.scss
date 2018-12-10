@@ -1,9 +1,10 @@
-.home{
-	display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-}
 .home-title{
-	margin: 0
+	margin: 0;
+	align-self: end;
+}
+.home-subtitle{
+	align-self: center;
+}
+.flex-item{
+	flex: 1
 }

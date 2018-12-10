@@ -55,6 +55,7 @@ class App extends Component {
           <Route exact path='/' render={
             () => <Results 
                     repos={this.state.repos} 
+                    openModal={this.openModal}
                   />  
           }/>
           <Route exact path='/results' render={
