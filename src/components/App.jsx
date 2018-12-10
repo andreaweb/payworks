@@ -14,14 +14,26 @@ class App extends Component {
     isModalOpen: false,
     toResults: true
   }
+  componentDidMount(){
+    if(!this.state.repos){
+      this.openModal();
+    }
+  }
   closeModal = () => {
     this.setState({isModalOpen: false});
   }
   openModal = () => {
     this.setState({isModalOpen: true});
   }
-  fetchRepos = () => {
-      fetch(`http://api.github.com/orgs/${this.state.org}/repos`)
+  handleClose = () => {
+    if(!this.repos){
+      //show error in modal
+    }else{
+      this.closeModal();
+    }
+  }
+  fetchRepos = (company) => {
+      fetch(`http://api.github.com/orgs/${company}/repos`)
       .then(res => {
         console.log(res);
         if(res.ok){
@@ -32,7 +44,7 @@ class App extends Component {
       })
       .then(data => {
         console.log(data);
-        this.setState({repos: data, toResults: true});
+        this.setState({repos: data,isModalOpen: false});
       });
   }
   render() {
@@ -43,9 +55,6 @@ class App extends Component {
           <Route exact path='/' render={
             () => <Results 
                     repos={this.state.repos} 
-                    openModal={this.openModal}
-                    closeModal={this.closeModal}
-                    open={this.state.isModalOpen}
                   />  
           }/>
           <Route exact path='/results' render={
@@ -62,7 +71,9 @@ class App extends Component {
             open={this.state.isModalOpen}
             onClose={this.handleClose}
           >
-          <Home />
+          <Home 
+            fetchRepos={this.fetchRepos}  
+          />
         </Modal>
       </div>
     );

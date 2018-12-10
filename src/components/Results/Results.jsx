@@ -66,11 +66,6 @@ class Results extends Component {
 		page: 0,
 		rowsPerPage: 10,
 	}
-	componentDidMount(){
-		if(!this.props.repos){
-			this.props.openModal();
-		}
-	}
 	createSortHandler = property => event => {
 		this.handleRequestSort(event, property);
 	};
@@ -78,13 +73,7 @@ class Results extends Component {
 		const lowerCase = e.target.value.toLowerCase();
 		this.setState({query: lowerCase});
 	}
-	handleClose = () => {
-		if(!this.props.repos){
-			//show error in modal
-		}else{
-			this.props.closeModal();
-		}
-	};
+	
 	handleRequestSort = (event, property) => {
 		const orderBy = property;
 		let order = 'desc';
@@ -158,7 +147,11 @@ class Results extends Component {
 								</TableHead>
 								<TableBody>
 									{ stableSort(this.props.repos, getSorting(order, orderBy))
-										.filter((r) => r.language.toLowerCase().includes(this.state.query))
+										.filter(
+											(r) => r.language ? //not all projects have a language
+											r.language.toLowerCase().includes(this.state.query)
+											: true
+										)
 										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 										.map(repo => {
 											return (

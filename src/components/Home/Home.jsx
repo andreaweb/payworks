@@ -29,7 +29,7 @@ class Home extends Component {
   }
   handleSubmit = () => {
     if(this.state.org.length > 1){
-      this.props.fetchRepos();
+      this.props.fetchRepos(this.state.org);
     }
   }
   handleChange = (e) => {
