@@ -11,8 +11,7 @@ class App extends Component {
   state = {
     org: '',
     repos: null, 
-    isModalOpen: false,
-    toResults: true
+    isModalOpen: false
   }
   componentDidMount(){
     if(!this.state.repos){
@@ -45,6 +44,10 @@ class App extends Component {
       .then(data => {
         console.log(data);
         this.setState({repos: data,isModalOpen: false});
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({repos: 404});
       });
   }
   render() {
@@ -67,11 +70,11 @@ class App extends Component {
         </Switch>
       </Router>
         <Modal
-            aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
-            open={this.state.isModalOpen}
-            onClose={this.handleClose}
-          >
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+          open={this.state.isModalOpen}
+          onClose={this.handleClose}
+        >
           <Home 
             fetchRepos={this.fetchRepos}  
           />

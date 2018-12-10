@@ -9,9 +9,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
-
 import EditIcon from '@material-ui/icons/Edit';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
+import { styles, theme } from '../../common/MuiTheme.js';
 import './Results.scss';
 
 function desc(a, b, orderBy) {
@@ -39,16 +39,6 @@ function getSorting(order, orderBy) {
 	? (a, b) => desc(a, b, orderBy) 
 	: (a, b) => -desc(a, b, orderBy);
 }
-
-const styles = theme => ({
-	paper: {
-		position: 'absolute',
-		width: theme.spacing.unit * 50,
-		backgroundColor: theme.palette.background.paper,
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing.unit * 4,
-	},
-});
 
 const rows = [
 	{ id: 'name', numeric: false, disablePadding: false, label: 'Repo Name' },
@@ -89,7 +79,7 @@ class Results extends Component {
 			<main>
 				
 				{this.props.repos === 404 && 
-					<p onClick={this.props.openModal}>An error ocurred. Click to try again.</p>
+					<p onClick={this.props.openModal}>This organization wasn't found. Click to try again.</p>
 				}
 				{this.props.repos !== 404 &&
 					this.props.repos &&
@@ -105,14 +95,16 @@ class Results extends Component {
 							<span className="company">{this.props.repos[0].owner.login} </span>
 							<EditIcon className="blink" />
 						</button>
-						<TextField
-							label="Search by Language"
-							name="filter"
-							value={this.state.query}
-							onChange={this.handleSearch}
-							margin="normal"
-							variant="outlined"
-						/>
+						<MuiThemeProvider theme={theme}>
+							<TextField
+								label="Search by Language"
+								name="filter"
+								value={this.state.query}
+								onChange={this.handleSearch}
+								margin="normal"
+								variant="outlined"
+							/>
+						</MuiThemeProvider>
 					</div>
 					<Paper>
 						<div className="table-container">
@@ -185,10 +177,13 @@ class Results extends Component {
 }
 
 Results.propTypes = {
-	repos: PropTypes.array,
+	repos: PropTypes.oneOfType([
+		PropTypes.array,
+		PropTypes.number
+	]),
 	open: PropTypes.bool,
 	openModal: PropTypes.func,
 	closeModal: PropTypes.func
 };
 
-export default withStyles(styles)(Results);
+export default withStyles(styles, { withTheme: true })(Results);
