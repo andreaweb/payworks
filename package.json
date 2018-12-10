@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build.js",
-    "start": "set port=9900 && node scripts/start.js",
+    "start": "set port=5000 && node scripts/start.js",
     "test": "node scripts/test.js --env=jsdom --coverage",
     "lint": "eslint src/**/*.js src/**/*.jsx"
   },

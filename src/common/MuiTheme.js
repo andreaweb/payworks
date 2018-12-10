@@ -34,6 +34,21 @@ export const theme = createMuiTheme({
 				}
 			},
 		},
+		MuiSnackbarContent:{
+			root:{
+				MuiSvgIcon: {
+					root: {
+						'marginRight': '10px'
+					}
+				}
+			}
+		},
+		MuiSvgIcon: {
+			root: {
+				top: '.1em',
+				position: 'relative'
+			}
+		},
 		MuiButtonBase: {
 			root: {
 				fontSize: '1.0714em'

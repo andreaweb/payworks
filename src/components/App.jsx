@@ -12,7 +12,8 @@ class App extends Component {
     org: '',
     repos: null, 
     isModalOpen: false,
-    error: false
+    error: false,
+    errorMsg: ''
   }
   componentDidMount(){
     if(!this.state.repos){
@@ -44,12 +45,15 @@ class App extends Component {
       })
       .then(data => {
         console.log(data);
-        this.setState({repos: data,isModalOpen: false});
+        this.setState({repos: data,isModalOpen: false,error: false});
       })
       .catch(err => {
         console.log(err);
-        this.setState({error: String(err)});
+        this.setState({error: true, errorMsg: String(err)});
       });
+  }
+  resetError = () => {
+    this.setState({error: false});
   }
   render() {
     return (
@@ -60,7 +64,9 @@ class App extends Component {
             () => <Results 
                     repos={this.state.repos} 
                     openModal={this.openModal}
+                    resetError={this.resetError}
                     error={this.state.error}
+                    errorMsg={this.state.errorMsg}
                   />  
           }/>
           <Route exact path='/results' render={

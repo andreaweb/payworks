@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -9,8 +10,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Tooltip from '@material-ui/core/Tooltip';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import ErrorIcon from '@material-ui/icons/Error';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import CloseIcon from '@material-ui/icons/Close';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { styles, theme } from '../../common/MuiTheme.js';
 import './Results.scss';
@@ -49,6 +55,26 @@ const rows = [
 	{ id: 'stargazers_count', numeric: true, disablePadding: false, label: 'Stars' }
 ];
 
+const styles1 = theme => ({
+  error: {
+    backgroundColor: theme.palette.error.dark,
+  },
+  info: {
+    backgroundColor: theme.palette.primary.dark,
+  },
+  icon: {
+    fontSize: 20,
+  },
+  iconVariant: {
+    opacity: 0.9,
+    marginRight: theme.spacing.unit,
+  },
+  message: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
+
 class Results extends Component {
 	state = {
 		order: 'desc',
@@ -84,11 +110,38 @@ class Results extends Component {
 		const { rowsPerPage, page, order, orderBy } = this.state;
 		return (
 			<main>
-				
 				{this.props.error && 
-					<p onClick={this.props.openModal}>
-					{this.props.error}
-					</p>
+					<MuiThemeProvider theme={theme}>
+						<Snackbar
+							anchorOrigin={{
+								vertical: 'bottom',
+								horizontal: 'left',
+							}}
+							open={this.props.error}
+							autoHideDuration={6000}
+							onClose={this.handleClose}
+						>
+							<SnackbarContent
+								aria-describedby="client-snackbar"
+								message={
+									<span id="client-snackbar">
+										<ErrorIcon />
+										<span className="error-msg">{this.props.errorMsg}</span>
+									</span>
+								}
+								action={[
+									<IconButton
+										key="close"
+										aria-label="Close"
+										color="inherit"
+										onClick={this.props.resetError}
+									>
+										<CloseIcon />
+									</IconButton>,
+								]}
+							/>
+						</Snackbar>
+					</MuiThemeProvider>
 				}
 				{this.props.repos &&
 				<section>
@@ -162,7 +215,11 @@ class Results extends Component {
 													role="checkbox"
 												>
 													<TableCell component="th" className="repo-name" scope="row">
+														<a href={repo.branches_url.replace(/\{[^{}]*\}/g, '')
+															//https://api.github.com/repos/carta/django-polymorphic-queries/branches{/branch}
+														}>
 														{repo.name}
+														</a>
 													</TableCell>
 													<TableCell component="th" scope="row">
 														{repo.language}
@@ -201,13 +258,12 @@ class Results extends Component {
 
 Results.propTypes = {
 	repos: PropTypes.array,
-	error: PropTypes.oneOfType([
-		PropTypes.bool,
-		PropTypes.string
-	]),
+	error: PropTypes.bool,
+	errorMsg: PropTypes.string,
+	resetError: PropTypes.func,
 	open: PropTypes.bool,
 	openModal: PropTypes.func,
 	closeModal: PropTypes.func
 };
 
-export default withStyles(styles, { withTheme: true })(Results);
+export default withStyles(styles,styles1, { withTheme: true })(Results);
