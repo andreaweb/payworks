@@ -9,8 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
-import Modal from '@material-ui/core/Modal';
-import Home from '../Home/Home.jsx';
+
 import EditIcon from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core/styles';
 import './Results.scss';
@@ -63,10 +62,14 @@ class Results extends Component {
 	state = {
 		order: 'desc',
 		orderBy: 'open_issues',
-		open: false,
 		query: '',
 		page: 0,
 		rowsPerPage: 10,
+	}
+	componentDidMount(){
+		if(!this.props.repos){
+			this.props.openModal();
+		}
 	}
 	createSortHandler = property => event => {
 		this.handleRequestSort(event, property);
@@ -75,11 +78,12 @@ class Results extends Component {
 		const lowerCase = e.target.value.toLowerCase();
 		this.setState({query: lowerCase});
 	}
-	handleOpen = () => {
-		this.setState({ open: true });
-	};
 	handleClose = () => {
-		this.setState({ open: false });
+		if(!this.props.repos){
+			//show error in modal
+		}else{
+			this.props.closeModal();
+		}
 	};
 	handleRequestSort = (event, property) => {
 		const orderBy = property;
@@ -94,19 +98,16 @@ class Results extends Component {
 		const { rowsPerPage, page, order, orderBy } = this.state;
 		return (
 			<main>
-				{this.props.repos &&
+				
+				{this.props.repos === 404 && 
+					<p onClick={this.props.openModal}>An error ocurred. Click to try again.</p>
+				}
+				{this.props.repos !== 404 &&
+					this.props.repos &&
 				<section>
-					<Modal
-						aria-labelledby="simple-modal-title"
-						aria-describedby="simple-modal-description"
-						open={this.state.open}
-						onClose={this.handleClose}
-					>
-						<Home />
-					</Modal>
 					<div className="row">
 						<button 
-							onClick={this.handleOpen} 
+							onClick={this.props.openModal} 
 							component="button" 
 							tabIndex="0"
 							className="results-title"
@@ -185,14 +186,16 @@ class Results extends Component {
 					</Paper>
 				</section>
 				}
-				{!this.props.repos && <p>An error ocurred</p>}
 			</main>
 		);
 	}
 }
 
 Results.propTypes = {
-	repos: PropTypes.array
+	repos: PropTypes.array,
+	open: PropTypes.bool,
+	openModal: PropTypes.func,
+	closeModal: PropTypes.func
 };
 
 export default withStyles(styles)(Results);

@@ -4,13 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './Home.scss';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -28,12 +24,17 @@ function getModalStyle() {
 }
 
 class Home extends Component {
+  state = {
+    org: ''
+  }
   handleSubmit = () => {
-    if(this.props.org.length > 1){
+    if(this.state.org.length > 1){
       this.props.fetchRepos();
     }
   }
-
+  handleChange = (e) => {
+    this.setState({org: e.target.value});
+  }
   render() {
     return (
       <section className="home-content" style={getModalStyle()}>
@@ -42,8 +43,8 @@ class Home extends Component {
         <TextField
           label="Organization"
           name="organization"
-          value={this.props.org}
-          onChange={this.props.handleChange}
+          value={this.state.org}
+          onChange={this.handleChange}
           margin="normal"
           variant="outlined"
         />
