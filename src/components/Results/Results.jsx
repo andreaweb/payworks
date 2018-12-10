@@ -7,6 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import TablePagination from '@material-ui/core/TablePagination';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
@@ -63,7 +64,13 @@ class Results extends Component {
 		const lowerCase = e.target.value.toLowerCase();
 		this.setState({query: lowerCase});
 	}
-	
+	handleChangePage = (event, page) => {
+		this.setState({ page });
+	};
+
+	handleChangeRowsPerPage = event => {
+		this.setState({ rowsPerPage: event.target.value });
+	};
 	handleRequestSort = (event, property) => {
 		const orderBy = property;
 		let order = 'desc';
@@ -78,11 +85,12 @@ class Results extends Component {
 		return (
 			<main>
 				
-				{this.props.repos === 404 && 
-					<p onClick={this.props.openModal}>This organization wasn't found. Click to try again.</p>
+				{this.props.error && 
+					<p onClick={this.props.openModal}>
+					{this.props.error}
+					</p>
 				}
-				{this.props.repos !== 404 &&
-					this.props.repos &&
+				{this.props.repos &&
 				<section>
 					<div className="row">
 						<button 
@@ -168,6 +176,21 @@ class Results extends Component {
 								</TableBody>
 							</Table>
 						</div>
+						<TablePagination
+							rowsPerPageOptions={[5, 10, 25]}
+							component="div"
+							count={this.props.repos.length}
+							rowsPerPage={rowsPerPage}
+							page={page}
+							backIconButtonProps={{
+								'aria-label': 'Previous Page',
+							}}
+							nextIconButtonProps={{
+								'aria-label': 'Next Page',
+							}}
+							onChangePage={this.handleChangePage}
+							onChangeRowsPerPage={this.handleChangeRowsPerPage}
+						/>
 					</Paper>
 				</section>
 				}
@@ -177,9 +200,10 @@ class Results extends Component {
 }
 
 Results.propTypes = {
-	repos: PropTypes.oneOfType([
-		PropTypes.array,
-		PropTypes.number
+	repos: PropTypes.array,
+	error: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.string
 	]),
 	open: PropTypes.bool,
 	openModal: PropTypes.func,

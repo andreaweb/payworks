@@ -11,7 +11,8 @@ class App extends Component {
   state = {
     org: '',
     repos: null, 
-    isModalOpen: false
+    isModalOpen: false,
+    error: false
   }
   componentDidMount(){
     if(!this.state.repos){
@@ -47,7 +48,7 @@ class App extends Component {
       })
       .catch(err => {
         console.log(err);
-        this.setState({repos: 404});
+        this.setState({error: String(err)});
       });
   }
   render() {
@@ -59,6 +60,7 @@ class App extends Component {
             () => <Results 
                     repos={this.state.repos} 
                     openModal={this.openModal}
+                    error={this.state.error}
                   />  
           }/>
           <Route exact path='/results' render={
