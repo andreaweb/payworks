@@ -9,6 +9,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
+import Modal from '@material-ui/core/Modal';
+import Home from '../Home/Home.jsx';
 import { withStyles } from '@material-ui/core/styles';
 import './Results.scss';
 
@@ -39,21 +41,13 @@ function getSorting(order, orderBy) {
 }
 
 const styles = theme => ({
-	overrides:{
-		palette: {
-			primary: '#fff',
-			secondary: '#000',
-		},
-		MuiInputBase: {
-			root:{
-				border: '1px solid #000',
-				color:'#fff',
-				'&$focused': {
-          borderColor: 'transparent'
-        }
-			}
-		}
-	}
+	paper: {
+		position: 'absolute',
+		width: theme.spacing.unit * 50,
+		backgroundColor: theme.palette.background.paper,
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing.unit * 4,
+	},
 });
 
 const rows = [
@@ -68,6 +62,7 @@ class Results extends Component {
 	state = {
 		order: 'desc',
 		orderBy: 'open_issues',
+		open: false,
 		query: '',
 		page: 0,
 		rowsPerPage: 10,
@@ -79,6 +74,12 @@ class Results extends Component {
 		const lowerCase = e.target.value.toLowerCase();
 		this.setState({query: lowerCase});
 	}
+	handleOpen = () => {
+		this.setState({ open: true });
+	};
+	handleClose = () => {
+		this.setState({ open: false });
+	};
 	handleRequestSort = (event, property) => {
 		const orderBy = property;
 		let order = 'desc';
@@ -94,8 +95,16 @@ class Results extends Component {
 			<main>
 				{this.props.repos &&
 				<section>
+					<Modal
+						aria-labelledby="simple-modal-title"
+						aria-describedby="simple-modal-description"
+						open={this.state.open}
+						onClose={this.handleClose}
+					>
+						<Home/>
+					</Modal>
 					<div className="row">
-						<h2>
+						<h2 onClick={this.handleOpen}>
 						Showing results of {this.props.repos[0].owner.login} (click to change)
 						</h2>
 						<TextField
