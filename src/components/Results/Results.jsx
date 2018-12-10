@@ -11,6 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import Modal from '@material-ui/core/Modal';
 import Home from '../Home/Home.jsx';
+import EditIcon from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core/styles';
 import './Results.scss';
 
@@ -101,12 +102,19 @@ class Results extends Component {
 						open={this.state.open}
 						onClose={this.handleClose}
 					>
-						<Home/>
+						<Home />
 					</Modal>
 					<div className="row">
-						<h2 onClick={this.handleOpen}>
-						Showing results of {this.props.repos[0].owner.login} (click to change)
-						</h2>
+						<button 
+							onClick={this.handleOpen} 
+							component="button" 
+							tabIndex="0"
+							className="results-title"
+						>
+							<span className="lighter">Showing results of </span>
+							<span className="company">{this.props.repos[0].owner.login} </span>
+							<EditIcon className="blink" />
+						</button>
 						<TextField
 							label="Search by Language"
 							name="filter"
