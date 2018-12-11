@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Results from './Results/Results.jsx';
 import RepositoryDetails from './RepositoryDetails/RepositoryDetails.jsx';
 import Modal from '@material-ui/core/Modal';
-import Home from './Home/Home.jsx';
+import ModalSearch from './ModalSearch/ModalSearch.jsx';
 import './App.scss';
 
 class App extends Component {
@@ -29,23 +29,23 @@ class App extends Component {
     }
   }
   fetchRepos = (org) => {
-      fetch(`http://api.github.com/orgs/${org}/repos`)
-      .then(res => {
-        console.log(res);
-        if(res.ok){
-          return res.json();
-        }else{
-          return null; //render an error inside Results
-        }
-      })
-      .then(data => {
-        console.log(data);
-        this.setState({repos: data,isModalOpen: false,error: false});
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState({error: true, errorMsg: String(err)});
-      });
+    fetch(`http://api.github.com/orgs/${org}/repos`)
+    .then(res => {
+      console.log(res);
+      if(res.ok){
+        return res.json();
+      }else{
+        return null; //render an error inside Results
+      }
+    })
+    .then(data => {
+      console.log(data);
+      this.setState({repos: data,isModalOpen: false,error: false});
+    })
+    .catch(err => {
+      console.log(err);
+      this.setState({error: true, errorMsg: String(err)});
+    });
   }
   resetError = () => {
     this.setState({error: false});
@@ -84,7 +84,7 @@ class App extends Component {
           open={this.state.isModalOpen}
           onClose={this.handleClose}
         >
-          <Home 
+          <ModalSearch 
             fetchRepos={this.fetchRepos}  
           />
         </Modal>

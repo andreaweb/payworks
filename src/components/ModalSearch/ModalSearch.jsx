@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { styles, theme } from '../../common/MuiTheme.js';
-import './Home.scss';
+import './ModalSearch.scss';
 
 function getModalStyle() {
 	const top = 50;
@@ -25,7 +25,7 @@ function getModalStyle() {
 	};
 }
 
-class Home extends Component {
+class ModalSearch extends Component {
 	state = {
 		org: ''
 	}
@@ -65,9 +65,9 @@ class Home extends Component {
 	}
 }
 
-Home.propTypes = {
+ModalSearch.propTypes = {
 	handleChange: PropTypes.func.isRequired,
 	fetchRepos: PropTypes.func,
 	org: PropTypes.string
 };
-export default withStyles(styles, { withTheme: true })(Home);
+export default withStyles(styles, { withTheme: true })(ModalSearch);
