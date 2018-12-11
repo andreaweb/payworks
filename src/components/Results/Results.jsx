@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import TextField from '@material-ui/core/TextField';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,9 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
-import EditIcon from '@material-ui/icons/Edit';
-import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
-import { styles, theme } from '../../common/MuiTheme.js';
+import { withStyles } from '@material-ui/core/styles';
+import { styles } from '../../common/MuiTheme.js';
 import './Results.scss';
 
 function desc(a, b, orderBy) {
@@ -77,31 +75,8 @@ class Results extends Component {
 		const { rowsPerPage, page, order, orderBy } = this.state;
 		const { rows } = this.props;
 		return (
-			<main>
+			<div>
 				{this.props.arr &&
-				<section>
-					<div className="row">
-						<button 
-							onClick={this.props.openModal} 
-							component="button" 
-							tabIndex="0"
-							className="results-title"
-						>
-							<span className="lighter">Showing results of </span>
-							<span className="company">{this.props.arr[0].owner.login} </span>
-							<EditIcon className="blink" />
-						</button>
-						<MuiThemeProvider theme={theme}>
-							<TextField
-								label="Search by Language"
-								name="filter"
-								value={this.state.query}
-								onChange={this.handleSearch}
-								margin="normal"
-								variant="outlined"
-							/>
-						</MuiThemeProvider>
-					</div>
 					<Paper>
 						<div className="table-container">
 							<Table aria-labelledby="tableTitle">
@@ -149,26 +124,24 @@ class Results extends Component {
 													tabIndex={-1}
 													role="checkbox"
 												>
-													<TableCell component="th" className="item-name" scope="row">
-														<Link 
-															to={`/repository-details/${arrItem.owner}/
-															${arrItem[rows[0].id]}`}
-														>
-															{arrItem[rows[0].id]}
-														</Link>
-													</TableCell>
-													<TableCell className="item-language" component="th" scope="row">
-														{arrItem[rows[1].id]}
-													</TableCell>
-													<TableCell className="item-forks" numeric>
-														{arrItem[rows[2].id]}
-													</TableCell>
-													<TableCell className="item-issues" numeric>
-														{arrItem[rows[3].id]}
-													</TableCell>
-													<TableCell className="item-stars" numeric>
-														{arrItem[rows[4].id]}
-													</TableCell>
+													{
+														rows.map(
+															(row => 
+															<TableCell key={row.id} numeric={row.numeric}>
+																{ //links only for repo.name
+																	row.id === 'name' ?
+																	<Link 
+																		to={`/repository-details/${arrItem.owner}/
+																		${arrItem[row.id]}`}
+																	>
+																		{arrItem[row.id]}
+																	</Link>
+																	: <span>{arrItem[row.id]}</span>
+																}
+															</TableCell>
+															)
+														)
+													}
 												</TableRow>
 											);
 										})}
@@ -191,9 +164,8 @@ class Results extends Component {
 							onChangeRowsPerPage={this.handleChangeRowsPerPage}
 						/>
 					</Paper>
-				</section>
 				}
-			</main>
+			</div>
 		);
 	}
 }

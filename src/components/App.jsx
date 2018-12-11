@@ -83,11 +83,13 @@ class App extends Component {
           }/>
           <Route 
             path='/repository-details/:org/:name' 
-            render={() => 
+            render={(props) => 
                   <Details 
                     resetError={this.resetError}
+                    openModal={this.openModal}
                     error={this.state.error}
                     errorMsg={this.state.errorMsg}
+                    {...props}
                   />
           }/>
         </Switch>

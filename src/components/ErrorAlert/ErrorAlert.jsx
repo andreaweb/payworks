@@ -29,6 +29,14 @@ const styles = theme => ({
 });
 
 class ErrorAlert extends Component {
+	componentDidMount(){
+		if(this.props.redirect){
+			setTimeout(this.redirectToHome(),5000);
+		}
+	}
+	redirectToHome = () => {
+		this.props.history.push('/');
+	}
 	render(){
 		return(
 			<MuiThemeProvider theme={theme}>
@@ -56,7 +64,7 @@ class ErrorAlert extends Component {
 								onClick={this.props.resetError}
 							>
 								<CloseIcon />
-							</IconButton>,
+							</IconButton>
 						]}
 					/>
 				</Snackbar>
@@ -67,7 +75,9 @@ class ErrorAlert extends Component {
 ErrorAlert.propTypes = {
 	error: PropTypes.bool,
 	errorMsg: PropTypes.string,
-	resetError: PropTypes.func
+	redirect: PropTypes.bool,
+	resetError: PropTypes.func,
+	history: PropTypes.object
 };
 
 export default withStyles(styles, { withTheme: true })(ErrorAlert);
