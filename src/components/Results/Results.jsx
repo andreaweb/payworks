@@ -75,6 +75,7 @@ class Results extends Component {
 	};
 	render() {
 		const { rowsPerPage, page, order, orderBy } = this.state;
+		const { rows } = this.props;
 		return (
 			<main>
 				{this.props.arr &&
@@ -106,7 +107,7 @@ class Results extends Component {
 							<Table aria-labelledby="tableTitle">
 								<TableHead>
 									<TableRow>
-										{this.props.rows.map(row => {
+										{rows.map(row => {
 											return (
 												<TableCell
 													key={row.id}
@@ -148,20 +149,26 @@ class Results extends Component {
 													tabIndex={-1}
 													role="checkbox"
 												>
-													<TableCell component="th" className="repo-name" scope="row">
+													<TableCell component="th" className="item-name" scope="row">
 														<Link 
-															to={`/repository-details/${arrItem.owner.login}/
-															${arrItem.name}`}
+															to={`/repository-details/${arrItem.owner}/
+															${arrItem[rows[0].id]}`}
 														>
-														{arrItem.name}
+															{arrItem[rows[0].id]}
 														</Link>
 													</TableCell>
-													<TableCell component="th" scope="row">
-														{arrItem.language}
+													<TableCell className="item-language" component="th" scope="row">
+														{arrItem[rows[1].id]}
 													</TableCell>
-													<TableCell numeric>{arrItem.forks}</TableCell>
-													<TableCell numeric>{arrItem.issues}</TableCell>
-													<TableCell numeric>{arrItem.stars}</TableCell>
+													<TableCell className="item-forks" numeric>
+														{arrItem[rows[2].id]}
+													</TableCell>
+													<TableCell className="item-issues" numeric>
+														{arrItem[rows[3].id]}
+													</TableCell>
+													<TableCell className="item-stars" numeric>
+														{arrItem[rows[4].id]}
+													</TableCell>
 												</TableRow>
 											);
 										})}

@@ -54,7 +54,6 @@ class App extends Component {
         };
         arr.push(arrItem);
       });
-      console.log(arr);
       return arr;
     })
     .then(arr => {
