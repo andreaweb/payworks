@@ -46,7 +46,7 @@ class Repos extends Component {
                 onClick={this.props.openModal} 
                 component="button" 
                 tabIndex="0"
-                className="results-title"
+                className="repos-title"
               >
                 <span className="lighter">Showing results of </span>
                 <span className="company">{this.props.repos[0].owner} </span>

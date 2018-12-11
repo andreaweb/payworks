@@ -57,10 +57,12 @@ class Details extends Component {
 		return (
 			<main>
 				<div className="row row--details">
-					<span className="lighter">Showing repositories of </span>
-					<span className="company">
-						{this.props.match.params.org}/
-						{this.props.match.params.name} 
+					<span>
+						<span className="lighter">Showing repositories of </span>
+						<span className="company">
+							{this.props.match.params.org}/
+							{this.props.match.params.name} 
+						</span>
 					</span>
 					<MuiThemeProvider theme={theme}>
 						<Button variant="outlined" color="primary">

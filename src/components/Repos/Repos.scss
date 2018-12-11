@@ -1,13 +1,8 @@
-.table-container{
-	margin-top: 1vh;
-	max-width: 100vw;
-  overflow: auto;
-}
 .company{
 	font-size: 1.5em;
 	margin: 0 0 0 .5em;
 }
-.results-title{
+.repos-title{
 	color: #fff;
 	font-size: 1.5em;
   background: none;
@@ -16,8 +11,8 @@
   border-bottom: 1px solid transparent;
   padding: 0;
 }
-.results-title:focus,
-.results-title:hover{
+.repos-title:focus,
+.repos-title:hover{
 	border-color: #fff;
 }
 .helper{

@@ -31,7 +31,7 @@ const styles = theme => ({
 class ErrorAlert extends Component {
 	componentDidMount(){
 		if(this.props.redirect){
-			setTimeout(this.redirectToHome(),5000);
+			setTimeout(this.redirectToHome,5000);
 		}
 	}
 	redirectToHome = () => {
