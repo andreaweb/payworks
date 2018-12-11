@@ -44,21 +44,15 @@ class Results extends Component {
 	state = {
 		order: 'desc',
 		orderBy: 'stars',
-		query: '',
 		page: 0,
 		rowsPerPage: 10,
 	}
 	createSortHandler = property => event => {
 		this.handleRequestSort(event, property);
 	};
-	handleSearch = (e) => {
-		const lowerCase = e.target.value.toLowerCase();
-		this.setState({query: lowerCase});
-	}
 	handleChangePage = (event, page) => {
 		this.setState({ page });
 	};
-
 	handleChangeRowsPerPage = event => {
 		this.setState({ rowsPerPage: event.target.value });
 	};
@@ -112,7 +106,7 @@ class Results extends Component {
 									{ stableSort(this.props.arr, getSorting(order, orderBy))
 										.filter(
 											(r) => r.language ? //not all projects have a language
-											r.language.toLowerCase().includes(this.state.query)
+											r.language.toLowerCase().includes(this.props.query)
 											: true
 										)
 										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -175,7 +169,8 @@ Results.propTypes = {
 	open: PropTypes.bool,
 	openModal: PropTypes.func,
 	closeModal: PropTypes.func,
-	rows: PropTypes.array
+	rows: PropTypes.array,
+	query: PropTypes.string
 };
 
 export default withStyles(styles, { withTheme: true })(Results);

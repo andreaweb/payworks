@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Results from '../Results/Results';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
-import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -57,23 +56,15 @@ class Details extends Component {
 	render() {
 		return (
 			<main>
-				<div className="row">
-					<button 
-						onClick={this.props.openModal} 
-						component="button" 
-						tabIndex="0"
-						className="results-title"
-					>
-						<span className="lighter">Showing repositories of </span>
-						<span className="company">
-							{this.props.match.params.org}/
-							{this.props.match.params.name} 
-						</span>
-						<EditIcon className="blink" />
-					</button>
+				<div className="row row--details">
+					<span className="lighter">Showing repositories of </span>
+					<span className="company">
+						{this.props.match.params.org}/
+						{this.props.match.params.name} 
+					</span>
 					<MuiThemeProvider theme={theme}>
 						<Button variant="outlined" color="primary">
-							<Link to="/">
+							<Link to="/" className="button-link">
 								Back to Repositories
 							</Link>
 						</Button>

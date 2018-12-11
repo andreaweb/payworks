@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import Results from '../Results/Results';
-import { withStyles } from '@material-ui/core/styles';
-import { styles } from '../../common/MuiTheme.js';
+import { styles, theme } from '../../common/MuiTheme.js';
+import TextField from '@material-ui/core/TextField';
+import EditIcon from '@material-ui/icons/Edit';
+import { MuiThemeProvider,withStyles } from '@material-ui/core/styles';
 import './Repos.scss';
 
 const rows = [
@@ -38,11 +40,36 @@ class Repos extends Component {
           />
         }
         {this.props.repos &&
-          <Results
-            arr={this.props.repos} 
-            openModal={this.props.openModal}
-            rows={rows}
-          />
+          <section>
+            <div className="row">
+              <button 
+                onClick={this.props.openModal} 
+                component="button" 
+                tabIndex="0"
+                className="results-title"
+              >
+                <span className="lighter">Showing results of </span>
+                <span className="company">{this.props.repos[0].owner} </span>
+                <EditIcon className="blink" />
+              </button>
+              <MuiThemeProvider theme={theme}>
+                <TextField
+                  label="Search by Language"
+                  name="filter"
+                  value={this.state.query}
+                  onChange={this.handleSearch}
+                  margin="normal"
+                  variant="outlined"
+                />
+              </MuiThemeProvider>
+            </div>
+            <Results
+              arr={this.props.repos} 
+              openModal={this.props.openModal}
+              rows={rows}
+              query={this.state.query}
+            />
+          </section>
         }
       </main>
     );
