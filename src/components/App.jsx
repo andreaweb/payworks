@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Results from './Results/Results.jsx';
+import Repos from './Repos/Repos.jsx';
 import Details from './Details/Details.jsx';
 import Modal from '@material-ui/core/Modal';
 import ModalSearch from './ModalSearch/ModalSearch.jsx';
@@ -56,16 +56,13 @@ class App extends Component {
       <Router>
         <Switch>
           <Route exact path='/' render={
-            () => <Results 
+            () => <Repos 
                     repos={this.state.repos} 
                     openModal={this.openModal}
                     resetError={this.resetError}
                     error={this.state.error}
                     errorMsg={this.state.errorMsg}
                   />  
-          }/>
-          <Route exact path='/results' render={
-            ()=><Results repos={this.state.repos} />
           }/>
           <Route 
             path='/repository-details/:org/:name' 

@@ -1,0 +1,42 @@
+.table-container{
+	margin-top: 1vh;
+	max-width: 100vw;
+  overflow: auto;
+}
+.company{
+	font-size: 1.5em;
+	margin: 0 0 0 .5em;
+}
+.results-title{
+	color: #fff;
+	font-size: 1.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+  padding: 0;
+}
+.results-title:focus,
+.results-title:hover{
+	border-color: #fff;
+}
+.helper{
+	color: #ccc;
+	font-size: .8em;
+}
+.lighter{
+	font-weight: 400;
+}
+@keyframes blink {  
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@-webkit-keyframes blink {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.blink {
+  -webkit-animation: blink 3s linear infinite;
+  -moz-animation: blink 3s linear infinite;
+  animation: blink 3s linear infinite;
+}
