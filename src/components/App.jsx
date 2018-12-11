@@ -15,11 +15,6 @@ class App extends Component {
     error: false,
     errorMsg: ''
   }
-  componentDidMount(){
-    if(!this.state.repos){
-      this.openModal();
-    }
-  }
   closeModal = () => {
     this.setState({isModalOpen: false});
   }
@@ -33,8 +28,8 @@ class App extends Component {
       this.closeModal();
     }
   }
-  fetchRepos = (company) => {
-      fetch(`http://api.github.com/orgs/${company}/repos`)
+  fetchRepos = (org) => {
+      fetch(`http://api.github.com/orgs/${org}/repos`)
       .then(res => {
         console.log(res);
         if(res.ok){
@@ -72,8 +67,14 @@ class App extends Component {
           <Route exact path='/results' render={
             ()=><Results repos={this.state.repos} />
           }/>
-          <Route exact path='/repository-details' render={
-            ()=><RepositoryDetails />
+          <Route 
+            path='/repository-details/:org/:name' 
+            render={() => 
+                  <RepositoryDetails 
+                    resetError={this.resetError}
+                    error={this.state.error}
+                    errorMsg={this.state.errorMsg}
+                  />
           }/>
         </Switch>
       </Router>
