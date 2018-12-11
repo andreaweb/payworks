@@ -38,7 +38,6 @@ class ErrorAlert extends Component {
 						horizontal: 'left',
 					}}
 					open={this.props.error}
-					autoHideDuration={6000}
 					onClose={this.handleClose}
 				>
 					<SnackbarContent

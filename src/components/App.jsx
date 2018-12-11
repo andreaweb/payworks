@@ -40,7 +40,25 @@ class App extends Component {
     })
     .then(data => {
       console.log(data);
-      this.setState({repos: data,isModalOpen: false,error: false});
+      let repos = data;
+      let arr = [];
+      repos.map(function(repo){
+        const arrItem = {
+          name: repo.name,
+          stars: repo.stargazers_count,
+          issues: repo.open_issues_count,
+          forks: repo.forks_count,
+          language: repo.language,
+          owner: repo.owner.login,
+          id: repo.id
+        };
+        arr.push(arrItem);
+      });
+      console.log(arr);
+      return arr;
+    })
+    .then(arr => {
+      this.setState({repos: arr,isModalOpen: false,error: false});
     })
     .catch(err => {
       console.log(err);

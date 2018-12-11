@@ -6,42 +6,27 @@ import { withStyles } from '@material-ui/core/styles';
 import { styles } from '../../common/MuiTheme.js';
 import './Repos.scss';
 
+const rows = [
+  { id: 'name', numeric: false, disablePadding: false, label: 'Repo Name' },
+  { id: 'language', numeric: false, disablePadding: false, label: 'Programming Language' },
+  { id: 'forks', numeric: true, disablePadding: false, label: 'Forks' },
+  { id: 'issues', numeric: true, disablePadding: false, label: 'Issues' },
+  { id: 'stars', numeric: true, disablePadding: false, label: 'Stars' }
+];
+
 class Repos extends Component {
   state = {
-    order: 'desc',
-    orderBy: 'open_issues',
-    query: '',
-    page: 0,
-    rowsPerPage: 10,
+    query: ''
   }
   componentDidMount(){
     if(!this.props.repos){
       this.props.openModal();
     }
   }
-  createSortHandler = property => event => {
-    this.handleRequestSort(event, property);
-  };
   handleSearch = (e) => {
     const lowerCase = e.target.value.toLowerCase();
     this.setState({query: lowerCase});
   }
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = 'desc';
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
-    }
-    this.setState({ order, orderBy });
-  };
   render() {
     return (
       <main>
@@ -54,8 +39,9 @@ class Repos extends Component {
         }
         {this.props.repos &&
           <Results
-            repos={this.props.repos} 
+            arr={this.props.repos} 
             openModal={this.props.openModal}
+            rows={rows}
           />
         }
       </main>

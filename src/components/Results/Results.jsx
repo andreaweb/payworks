@@ -42,27 +42,14 @@ function getSorting(order, orderBy) {
 	: (a, b) => -desc(a, b, orderBy);
 }
 
-const rows = [
-	{ id: 'name', numeric: false, disablePadding: false, label: 'Repo Name' },
-	{ id: 'language', numeric: false, disablePadding: false, label: 'Programming Language' },
-	{ id: 'forks', numeric: true, disablePadding: false, label: 'Forks' },
-	{ id: 'open_issues', numeric: true, disablePadding: false, label: 'Issues' },
-	{ id: 'stargazers_count', numeric: true, disablePadding: false, label: 'Stars' }
-];
-
 class Results extends Component {
 	state = {
 		order: 'desc',
-		orderBy: 'open_issues',
+		orderBy: 'stars',
 		query: '',
 		page: 0,
 		rowsPerPage: 10,
 	}
-	componentDidMount(){
-    if(!this.props.repos){
-      this.props.openModal();
-    }
-  }
 	createSortHandler = property => event => {
 		this.handleRequestSort(event, property);
 	};
@@ -90,7 +77,7 @@ class Results extends Component {
 		const { rowsPerPage, page, order, orderBy } = this.state;
 		return (
 			<main>
-				{this.props.repos &&
+				{this.props.arr &&
 				<section>
 					<div className="row">
 						<button 
@@ -100,7 +87,7 @@ class Results extends Component {
 							className="results-title"
 						>
 							<span className="lighter">Showing results of </span>
-							<span className="company">{this.props.repos[0].owner.login} </span>
+							<span className="company">{this.props.arr[0].owner.login} </span>
 							<EditIcon className="blink" />
 						</button>
 						<MuiThemeProvider theme={theme}>
@@ -119,7 +106,7 @@ class Results extends Component {
 							<Table aria-labelledby="tableTitle">
 								<TableHead>
 									<TableRow>
-										{rows.map(row => {
+										{this.props.rows.map(row => {
 											return (
 												<TableCell
 													key={row.id}
@@ -146,34 +133,35 @@ class Results extends Component {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{ stableSort(this.props.repos, getSorting(order, orderBy))
+									{ stableSort(this.props.arr, getSorting(order, orderBy))
 										.filter(
 											(r) => r.language ? //not all projects have a language
 											r.language.toLowerCase().includes(this.state.query)
 											: true
 										)
 										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-										.map(repo => {
+										.map(arrItem => {
 											return (
 												<TableRow
 													hover
-													key={repo.id}
+													key={arrItem.id}
 													tabIndex={-1}
 													role="checkbox"
 												>
 													<TableCell component="th" className="repo-name" scope="row">
 														<Link 
-															to={`/repository-details/${repo.owner.login}/${repo.name}`}
+															to={`/repository-details/${arrItem.owner.login}/
+															${arrItem.name}`}
 														>
-														{repo.name}
+														{arrItem.name}
 														</Link>
 													</TableCell>
 													<TableCell component="th" scope="row">
-														{repo.language}
+														{arrItem.language}
 													</TableCell>
-													<TableCell numeric>{repo.forks_count}</TableCell>
-													<TableCell numeric>{repo.open_issues_count}</TableCell>
-													<TableCell numeric>{repo.stargazers_count}</TableCell>
+													<TableCell numeric>{arrItem.forks}</TableCell>
+													<TableCell numeric>{arrItem.issues}</TableCell>
+													<TableCell numeric>{arrItem.stars}</TableCell>
 												</TableRow>
 											);
 										})}
@@ -183,7 +171,7 @@ class Results extends Component {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={this.props.repos.length}
+							count={this.props.arr.length}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							backIconButtonProps={{
@@ -204,10 +192,11 @@ class Results extends Component {
 }
 
 Results.propTypes = {
-	repos: PropTypes.array,
+	arr: PropTypes.array,
 	open: PropTypes.bool,
 	openModal: PropTypes.func,
-	closeModal: PropTypes.func
+	closeModal: PropTypes.func,
+	rows: PropTypes.array
 };
 
 export default withStyles(styles, { withTheme: true })(Results);
