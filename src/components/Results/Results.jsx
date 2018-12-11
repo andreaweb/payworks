@@ -12,7 +12,6 @@ import TablePagination from '@material-ui/core/TablePagination';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
-import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { styles, theme } from '../../common/MuiTheme.js';
 import './Results.scss';
@@ -91,13 +90,6 @@ class Results extends Component {
 		const { rowsPerPage, page, order, orderBy } = this.state;
 		return (
 			<main>
-				{this.props.error && 
-					<ErrorAlert 
-						resetError={this.props.resetError} 
-						error={this.props.error}
-						errorMsg={this.props.errorMsg}
-					/>
-				}
 				{this.props.repos &&
 				<section>
 					<div className="row">
@@ -213,9 +205,6 @@ class Results extends Component {
 
 Results.propTypes = {
 	repos: PropTypes.array,
-	error: PropTypes.bool,
-	errorMsg: PropTypes.string,
-	resetError: PropTypes.func,
 	open: PropTypes.bool,
 	openModal: PropTypes.func,
 	closeModal: PropTypes.func
