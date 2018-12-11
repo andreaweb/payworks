@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Results from './Results/Results.jsx';
-import RepositoryDetails from './RepositoryDetails/RepositoryDetails.jsx';
+import Details from './Details/Details.jsx';
 import Modal from '@material-ui/core/Modal';
 import ModalSearch from './ModalSearch/ModalSearch.jsx';
 import './App.scss';
@@ -70,7 +70,7 @@ class App extends Component {
           <Route 
             path='/repository-details/:org/:name' 
             render={() => 
-                  <RepositoryDetails 
+                  <Details 
                     resetError={this.resetError}
                     error={this.state.error}
                     errorMsg={this.state.errorMsg}

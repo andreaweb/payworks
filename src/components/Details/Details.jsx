@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
-import './RepositoryDetails.scss';
+import './Details.scss';
 
-class RepositoryDetails extends Component {
+class Details extends Component {
 	state = {
 
 	};
@@ -32,11 +32,11 @@ class RepositoryDetails extends Component {
 	}
 }
 
-RepositoryDetails.propTypes = {
+Details.propTypes = {
 	match: PropTypes.obj,
 	error: PropTypes.bool,
 	errorMsg: PropTypes.string,
 	resetError: PropTypes.func
 };
 
-export default RepositoryDetails;
+export default Details;
