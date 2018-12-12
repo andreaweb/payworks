@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { styles, theme } from '../../common/MuiTheme.js';
 import './ModalSearch.scss';
@@ -30,9 +30,7 @@ class ModalSearch extends Component {
 		org: ''
 	}
 	handleSubmit = () => {
-		if(this.state.org.length > 1){
-			this.props.fetchRepos(this.state.org);
-		}
+		this.props.fetchRepos(this.state.org);
 	}
 	handleChange = (e) => {
 		this.setState({org: e.target.value});
@@ -42,24 +40,33 @@ class ModalSearch extends Component {
 			<section className="home-content" style={getModalStyle()}>
 				<h1 className="home-title">Search for an organization</h1>
 				<h2 className="home-subtitle">to see its repos in Github</h2>
-				<div className="row">
 					<MuiThemeProvider theme={theme}>
-						<TextField
-							label="Organization"
+					<ValidatorForm
+            id="form"
+            onSubmit={this.handleSubmit}
+            onError={errors => console.log(errors)}
+          >
+          <div className="row">
+						<TextValidator
+              label="Organization"
 							name="organization"
-							value={this.state.org}
-							onChange={this.handleChange}
-							margin="normal"
-							variant="outlined"
-							className="flex-item"
-						/>
+              validators={['required']}
+              value={this.state.org}
+              variant="outlined"
+              errorMessages={['Required']}
+              onChange={this.handleChange}
+              id="organization"
+              margin="normal"
+              className="flex-item"
+            />
 						<Button type="submit"
 						variant="contained"
-						onClick={this.handleSubmit}>
+						>
 						GO
 						</Button>
-					</MuiThemeProvider>
-				</div>
+					</div>
+				</ValidatorForm>
+				</MuiThemeProvider>
 			</section>
 		);
 	}

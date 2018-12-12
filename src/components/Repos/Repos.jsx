@@ -23,7 +23,6 @@ class Repos extends Component {
   componentDidMount(){
     if(this.props.match && !this.props.error){
       if(this.props.match.params.org){
-        console.log(this.props.match);
         this.props.fetchRepos(this.props.match.params.org);
       }else if(!this.props.repos){
         this.props.openModal();
