@@ -23,7 +23,7 @@ class App extends Component {
     this.setState({isModalOpen: true});
   }
   handleClose = () => {
-    if(this.repos){
+    if(this.state.repos){
       this.closeModal();
     }
   }
@@ -31,7 +31,6 @@ class App extends Component {
     this.setState({requesting: true});
     fetch(`http://api.github.com/orgs/${org}/repos`)
     .then(res => {
-      console.log(res);
       if(res.ok){
         return res.json();
       }else{
@@ -40,7 +39,6 @@ class App extends Component {
       }
     })
     .then(data => {
-      console.log(data);
       let repos = data;
       let arr = [];
       repos.map(function(repo){
@@ -99,17 +97,17 @@ class App extends Component {
           }/>
         </Switch>
       </Router>
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-          open={this.state.isModalOpen}
-          onClose={this.handleClose}
-        >
-          <ModalSearch 
-            requesting={this.state.requesting}
-            fetchRepos={this.fetchRepos}  
-          />
-        </Modal>
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={this.state.isModalOpen}
+        onClose={this.handleClose}
+      >
+        <ModalSearch 
+          requesting={this.state.requesting}
+          fetchRepos={this.fetchRepos}  
+        />
+      </Modal>
       </div>
     );
   }
