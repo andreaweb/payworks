@@ -47,6 +47,7 @@ class Details extends Component {
 			return arr;
 		})
 		.then(arr =>{
+			this.props.closeModal();
 			this.setState({branches: arr, error: false});
 		})
 		.catch(err =>{
@@ -100,7 +101,8 @@ Details.propTypes = {
 	error: PropTypes.bool,
 	errorMsg: PropTypes.string,
 	resetError: PropTypes.func,
-	openModal: PropTypes.func
+	openModal: PropTypes.func,
+	closeModal: PropTypes.func
 };
 
 export default Details;

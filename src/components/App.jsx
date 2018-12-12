@@ -78,6 +78,7 @@ class App extends Component {
                     openModal={this.openModal}
                     error={this.state.error}
                     errorMsg={this.state.errorMsg}
+                    closeModal={this.closeModal}
                     {...props}
                   />
           }/>
