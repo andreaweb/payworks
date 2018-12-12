@@ -145,7 +145,15 @@ class Results extends Component {
 						<TablePagination
 							rowsPerPageOptions={[5, 10, 25]}
 							component="div"
-							count={this.props.arr.length}
+							count={
+								this.props.query 
+								? this.props.arr
+									.filter(
+										(r) => r.language ?
+											r.language.toLowerCase().includes(this.props.query)
+											: true
+									).length 
+								: this.props.arr.length}
 							rowsPerPage={rowsPerPage}
 							page={page}
 							backIconButtonProps={{
