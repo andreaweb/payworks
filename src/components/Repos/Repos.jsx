@@ -21,17 +21,14 @@ class Repos extends Component {
     query: ''
   }
   componentDidMount(){
-    if(!this.props.repos && !this.props.match){
-      this.props.openModal();
-    }
     if(this.props.match && !this.props.error){
-      if(this.props.match.params){
+      if(this.props.match.params.org){
+        console.log(this.props.match);
         this.props.fetchRepos(this.props.match.params.org);
+      }else if(!this.props.repos){
+        this.props.openModal();
       }
     }
-    // if(this.props.error){
-    //   this.props.openModal();
-    // }
   }
   handleSearch = (e) => {
     const lowerCase = e.target.value.toLowerCase();

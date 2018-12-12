@@ -29,7 +29,8 @@ class Details extends Component {
       if(res.ok){
         return res.json();
       }else{
-        return null; //render an error inside Results
+        this.setState({error: true});
+        throw new Error(res.statusText); 
       }
     })
 		.then(data => {
