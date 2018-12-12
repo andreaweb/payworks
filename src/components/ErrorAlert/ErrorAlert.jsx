@@ -35,7 +35,7 @@ class ErrorAlert extends Component {
 		}
 	}
 	redirectToHome = () => {
-		this.props.history.push('/');
+		this.props.history.push(`/${this.props.org}`);
 	}
 	render(){
 		return(
@@ -77,7 +77,8 @@ ErrorAlert.propTypes = {
 	errorMsg: PropTypes.string,
 	redirect: PropTypes.bool,
 	resetError: PropTypes.func,
-	history: PropTypes.object
+	history: PropTypes.object,
+	org: PropTypes.string
 };
 
 export default withStyles(styles, { withTheme: true })(ErrorAlert);

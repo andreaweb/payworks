@@ -66,7 +66,7 @@ class Details extends Component {
 					</span>
 					<MuiThemeProvider theme={theme}>
 						<Button variant="outlined" color="primary">
-							<Link to="/" className="button-link">
+							<Link to={`/${this.props.match.params.org}`} className="button-link">
 								Back to Repositories
 							</Link>
 						</Button>
@@ -78,6 +78,7 @@ class Details extends Component {
 						error={this.state.error}
 						errorMsg={`${this.state.errorMsg}, redirecting to home...`}
 						redirect={true}
+						org={this.props.match.params.org}
 						history={this.props.history}
 					/>
 				}

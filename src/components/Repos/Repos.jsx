@@ -21,8 +21,13 @@ class Repos extends Component {
     query: ''
   }
   componentDidMount(){
-    if(!this.props.repos){
+    if(!this.props.repos && !this.props.match){
       this.props.openModal();
+    }
+    if(this.props.match){
+      if(this.props.match.params){
+        this.props.fetchRepos(this.props.match.params.org);
+      }
     }
   }
   handleSearch = (e) => {
@@ -83,7 +88,9 @@ Repos.propTypes = {
   resetError: PropTypes.func,
   open: PropTypes.bool,
   openModal: PropTypes.func,
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func,
+  fetchRepos: PropTypes.func,
+  match: PropTypes.object
 };
 
 export default withStyles(styles, { withTheme: true })(Repos);

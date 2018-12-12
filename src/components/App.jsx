@@ -22,9 +22,7 @@ class App extends Component {
     this.setState({isModalOpen: true});
   }
   handleClose = () => {
-    if(!this.repos){
-      //show error in modal
-    }else{
+    if(this.repos){
       this.closeModal();
     }
   }
@@ -72,15 +70,6 @@ class App extends Component {
       <div>
       <Router>
         <Switch>
-          <Route exact path='/' render={
-            () => <Repos 
-                    repos={this.state.repos} 
-                    openModal={this.openModal}
-                    resetError={this.resetError}
-                    error={this.state.error}
-                    errorMsg={this.state.errorMsg}
-                  />  
-          }/>
           <Route 
             path='/repository-details/:org/:name' 
             render={(props) => 
@@ -91,6 +80,19 @@ class App extends Component {
                     errorMsg={this.state.errorMsg}
                     {...props}
                   />
+          }/>
+          <Route 
+            path='/:org' 
+            render={(props) => 
+                  <Repos 
+                    repos={this.state.repos}
+                    fetchRepos={this.fetchRepos}
+                    openModal={this.openModal}
+                    resetError={this.resetError}
+                    error={this.state.error}
+                    errorMsg={this.state.errorMsg}
+                    {...props}
+                  />  
           }/>
         </Switch>
       </Router>
