@@ -33,6 +33,9 @@ class ErrorAlert extends Component {
 		if(this.props.redirect){
 			setTimeout(this.redirectToHome,5000);
 		}
+		if(this.props.openModal){
+			setTimeout(this.props.openModal,1000);
+		}
 	}
 	redirectToHome = () => {
 		this.props.history.push(`/${this.props.org}`);
@@ -78,7 +81,8 @@ ErrorAlert.propTypes = {
 	redirect: PropTypes.bool,
 	resetError: PropTypes.func,
 	history: PropTypes.object,
-	org: PropTypes.string
+	org: PropTypes.string,
+	openModal: PropTypes.func
 };
 
 export default withStyles(styles, { withTheme: true })(ErrorAlert);

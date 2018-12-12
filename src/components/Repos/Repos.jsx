@@ -24,11 +24,14 @@ class Repos extends Component {
     if(!this.props.repos && !this.props.match){
       this.props.openModal();
     }
-    if(this.props.match){
+    if(this.props.match && !this.props.error){
       if(this.props.match.params){
         this.props.fetchRepos(this.props.match.params.org);
       }
     }
+    // if(this.props.error){
+    //   this.props.openModal();
+    // }
   }
   handleSearch = (e) => {
     const lowerCase = e.target.value.toLowerCase();
@@ -42,6 +45,7 @@ class Repos extends Component {
             resetError={this.props.resetError} 
             error={this.props.error}
             errorMsg={this.props.errorMsg}
+            openModal={this.props.openModal}
           />
         }
         {this.props.repos &&
