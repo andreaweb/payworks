@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { styles, theme } from '../../common/MuiTheme.js';
@@ -42,27 +43,32 @@ class ModalSearch extends Component {
 				<h2 className="home-subtitle">to see its repos in Github</h2>
 					<MuiThemeProvider theme={theme}>
 					<ValidatorForm
-            id="form"
-            onSubmit={this.handleSubmit}
-            onError={errors => console.log(errors)}
-          >
-          <div className="row">
+						id="form"
+						onSubmit={this.handleSubmit}
+						onError={errors => console.log(errors)}
+					>
+					<div className="row">
 						<TextValidator
-              label="Organization"
+							label="Organization"
 							name="organization"
-              validators={['required']}
-              value={this.state.org}
-              variant="outlined"
-              errorMessages={['Required']}
-              onChange={this.handleChange}
-              id="organization"
-              margin="normal"
-              className="flex-item"
-            />
+							validators={['required']}
+							value={this.state.org}
+							variant="outlined"
+							errorMessages={['Required']}
+							onChange={this.handleChange}
+							id="organization"
+							margin="normal"
+							className="flex-item"
+						/>
 						<Button type="submit"
 						variant="contained"
 						>
-						GO
+							{!this.props.requesting &&
+								'GO'
+							}
+							{this.props.requesting &&
+								<CircularProgress />
+							}
 						</Button>
 					</div>
 				</ValidatorForm>
@@ -76,6 +82,7 @@ ModalSearch.propTypes = {
 	handleChange: PropTypes.func.isRequired,
 	fetchRepos: PropTypes.func,
 	org: PropTypes.string,
-	history: PropTypes.obj
+	history: PropTypes.obj,
+	requesting: PropTypes.bool
 };
 export default withStyles(styles, { withTheme: true })(ModalSearch);

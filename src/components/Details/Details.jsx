@@ -4,6 +4,7 @@ import Results from '../Results/Results';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { theme } from '../../common/MuiTheme.js';
 import './Details.scss';
@@ -74,6 +75,9 @@ class Details extends Component {
 						</Button>
 					</MuiThemeProvider>
 				</div>
+				{!this.state.error && !this.state.branches &&
+          <CircularProgress className="spinner" />
+        }
 				{this.state.error && 
 					<ErrorAlert 
 						resetError={this.props.resetError} 

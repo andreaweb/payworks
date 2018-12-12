@@ -13,7 +13,8 @@ class App extends Component {
     repos: null, 
     isModalOpen: false,
     error: false,
-    errorMsg: ''
+    errorMsg: '',
+    requesting: false
   }
   closeModal = () => {
     this.setState({isModalOpen: false});
@@ -27,6 +28,7 @@ class App extends Component {
     }
   }
   fetchRepos = (org) => {
+    this.setState({requesting: true});
     fetch(`http://api.github.com/orgs/${org}/repos`)
     .then(res => {
       console.log(res);
@@ -56,11 +58,10 @@ class App extends Component {
       return arr;
     })
     .then(arr => {
-      this.setState({repos: arr,isModalOpen: false,error: false});
+      this.setState({repos: arr,isModalOpen: false,requesting: false,error: false});
     })
     .catch(err => {
-      console.log(err);
-      this.setState({error: true, errorMsg: String(err)});
+      this.setState({error: true, requesting: false, errorMsg: String(err)});
     });
   }
   resetError = () => {
@@ -105,6 +106,7 @@ class App extends Component {
           onClose={this.handleClose}
         >
           <ModalSearch 
+            requesting={this.state.requesting}
             fetchRepos={this.fetchRepos}  
           />
         </Modal>
