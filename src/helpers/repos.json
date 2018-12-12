@@ -1,31 +1,20 @@
-{ "repo0": {
-  "id": 30238223,
-  "name": "Larger Numbers",
-  "owner": {
-    "login": "payworks",
+{ 
+  "repo0": {
+    "id": 30238223,
+    "name": "Larger Numbers",
+    "owner": "payworks",
+    "stars": 23,
+    "language": "Objective-C",
+    "issues": 8,
+    "forks": 7
   },
-  "stargazers_count": 23,
-  "watchers_count": 23,
-  "language": "Objective-C",
-  "forks_count": 7,
-  "open_issues_count": 8,
-  "forks": 7,
-  "open_issues": 8,
-  "watchers": 23
-},
-"repo1":  {
-  "id": 32527480,
-  "name": "Smaller Numbers",
-  "owner": {
-    "login": "payworks",
-  },
-  "size": 2448,
-  "stargazers_count": 10,
-  "watchers_count": 10,
-  "language": "Java",
-  "forks_count": 5,
-  "open_issues_count": 0,
-  "forks": 5,
-  "open_issues": 0,
-  "watchers": 10
-}}
+  "repo1":  {
+    "id": 32527480,
+    "name": "Smaller Numbers",
+    "owner": "payworks",
+    "stars": 10,
+    "language": "Java",
+    "issues": 0,
+    "forks": 5
+  }
+}

@@ -7,28 +7,38 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Results from './Results';
 import repos from '../../helpers/repos.json';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Tooltip from '@material-ui/core/Tooltip';
-import Paper from '@material-ui/core/Paper';
-import { shallow } from 'enzyme';
+import { shallow,mount } from 'enzyme';
+import renderer from 'react-test-renderer';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Results />, div);
-  ReactDOM.unmountComponentAtNode(div);
+const rows = [
+  { id: 'name', numeric: false, disablePadding: false, label: 'Repo Name' },
+  { id: 'language', numeric: false, disablePadding: false, label: 'Programming Language' },
+  { id: 'forks', numeric: true, disablePadding: false, label: 'Forks' },
+  { id: 'issues', numeric: true, disablePadding: false, label: 'Issues' },
+  { id: 'stars', numeric: true, disablePadding: false, label: 'Stars' }
+];
+
+const arr = [repos.repo0, repos.repo1];
+
+it('renders correctly', () => {
+    const tree = renderer.create(<Results arr={arr} rows={rows} />).toJSON();
+    expect(tree).toMatchSnapshot();
 });
 
-it('should reorder the repos according to the state', () => {
-		const arr = [repos.repo0, repos.repo1];
-    const comp = shallow(<Results repos={arr}/>);
-    comp.setState({ order: 'asc' });
-    //the default is desc, which would return 'Larger Numbers'
-    const firstRow = 
-    comp.find(TableBody).find(TableCell).find('.repo-name').at(0).children();
-    expect(firstRow.text()).toEqual('Smaller Numbers');
+it('should reorder the repos according to click', () => {
+    const wrapper = mount(
+      <Router><Results arr={arr} rows={rows} query="" /></Router>
+    );
+    
+    const beforeClick = wrapper.find(TableCell).find(Link).at(0).children();
+    expect(beforeClick.text()).toEqual('Larger Numbers');
+
+    wrapper.find('TableSortLabel#stars').simulate('click');
+
+    const afterClick = wrapper.find(TableCell).find(Link).at(0).children();
+    expect(afterClick.text()).toEqual('Smaller Numbers');
 });
