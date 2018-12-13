@@ -82,7 +82,6 @@ ModalSearch.propTypes = {
 	handleChange: PropTypes.func.isRequired,
 	fetchRepos: PropTypes.func,
 	org: PropTypes.string,
-	history: PropTypes.obj,
 	requesting: PropTypes.bool
 };
 export default withStyles(styles, { withTheme: true })(ModalSearch);

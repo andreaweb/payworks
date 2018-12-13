@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<main>
+  <div
+    className="row row--details"
+  >
+    <span>
+      <span
+        className="lighter"
+      >
+        Showing repositories of 
+      </span>
+      <span
+        className="company"
+      >
+        payworks
+        /
+        slate
+      </span>
+    </span>
+    <button
+      className="MuiButtonBase-root-27 MuiButton-root-1 MuiButton-outlined-9 MuiButton-outlinedPrimary-10"
+      disabled={false}
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex="0"
+      type="button"
+    >
+      <span
+        className="MuiButton-label-2"
+      >
+        <a
+          className="button-link"
+          href="/payworks"
+          onClick={[Function]}
+        >
+          Back to Repositories
+        </a>
+      </span>
+      <span
+        className="MuiTouchRipple-root-40"
+      />
+    </button>
+  </div>
+  <div
+    className="MuiCircularProgress-root-30 MuiCircularProgress-colorPrimary-33 MuiCircularProgress-indeterminate-32 spinner"
+    role="progressbar"
+    style={
+      Object {
+        "height": 40,
+        "width": 40,
+      }
+    }
+  >
+    <svg
+      className="MuiCircularProgress-svg-35"
+      viewBox="22 22 44 44"
+    >
+      <circle
+        className="MuiCircularProgress-circle-36 MuiCircularProgress-circleIndeterminate-38"
+        cx={44}
+        cy={44}
+        fill="none"
+        r={20.2}
+        strokeWidth={3.6}
+        style={Object {}}
+      />
+    </svg>
+  </div>
+</main>
+`;

@@ -39,7 +39,7 @@ class Repos extends Component {
         {this.props.error && 
           <ErrorAlert 
             resetError={this.props.resetError} 
-            error={this.props.error}
+            apiError={this.props.error}
             errorMsg={this.props.errorMsg}
             openModal={this.props.openModal}
           />

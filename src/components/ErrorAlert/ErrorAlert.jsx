@@ -9,12 +9,6 @@ import { theme } from '../../common/MuiTheme.js';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 
 const styles = theme => ({
-	error: {
-		backgroundColor: theme.palette.error.dark,
-	},
-	info: {
-		backgroundColor: theme.palette.primary.dark,
-	},
 	icon: {
 		fontSize: 20,
 	},
@@ -47,7 +41,7 @@ class ErrorAlert extends Component {
 						vertical: 'bottom',
 						horizontal: 'left',
 					}}
-					open={this.props.error}
+					open={this.props.apiError}
 					onClose={this.handleClose}
 				>
 					<SnackbarContent
@@ -75,7 +69,7 @@ class ErrorAlert extends Component {
 	}
 }
 ErrorAlert.propTypes = {
-	error: PropTypes.bool,
+	apiError: PropTypes.bool,
 	errorMsg: PropTypes.string,
 	redirect: PropTypes.bool,
 	resetError: PropTypes.func,

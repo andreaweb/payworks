@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RepositoryDetails from './RepositoryDetails';
+import Details from './Details';
+import renderer from 'react-test-renderer';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<RepositoryDetails />, div);
-  ReactDOM.unmountComponentAtNode(div);
+it('renders correctly', () => {
+    const tree = renderer.create(
+    	<Router><Details match={{params: {org: 'payworks', name: 'slate'}}} /></Router>
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
 });

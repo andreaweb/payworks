@@ -81,7 +81,7 @@ class Details extends Component {
 				{this.state.error && 
 					<ErrorAlert 
 						resetError={this.props.resetError} 
-						error={this.state.error}
+						apiError={this.state.error}
 						errorMsg={`${this.state.errorMsg}, redirecting to home...`}
 						redirect={true}
 						org={this.props.match.params.org}
