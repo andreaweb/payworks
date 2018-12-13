@@ -5,6 +5,8 @@ import Repos from './Repos/Repos.jsx';
 import Details from './Details/Details.jsx';
 import Modal from '@material-ui/core/Modal';
 import ModalSearch from './ModalSearch/ModalSearch.jsx';
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
+import { styles, theme } from '../common/MuiTheme.js';
 import './App.scss';
 
 class App extends Component {
@@ -67,7 +69,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <MuiThemeProvider theme={theme}>
       <Router>
         <Switch>
           <Route 
@@ -83,7 +85,7 @@ class App extends Component {
                   />
           }/>
           <Route 
-            path={['/', '/:org']}
+            path={'/:org?'}
             render={(props) => 
                   <Repos 
                     repos={this.state.repos}
@@ -105,10 +107,10 @@ class App extends Component {
       >
         <ModalSearch 
           requesting={this.state.requesting}
-          fetchRepos={this.fetchRepos}  
+          fetchRepos={this.fetchRepos}
         />
       </Modal>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
@@ -117,4 +119,4 @@ App.propTypes = {
   history: PropTypes.object
 };
 
-export default App;
+export default withStyles(styles, { withTheme: true })(App);

@@ -18,15 +18,17 @@ const rows = [
 class Details extends Component {
 	state = {
 		branches: null,
-		error: false
+		error: false,
+		errorMsg: null
 	};
 	componentDidMount(){
 		const repoName = this.props.match.params.name;
 		const orgName = this.props.match.params.org;
 		let fetchURL = `https://api.github.com/repos/${orgName}/${repoName}/branches`;
-		fetch(fetchURL)
-		.then(res => {
-      console.log(res);
+		this.fetchRepoDetails(fetchURL);
+	}
+	fetchRepoDetails = (url) => {
+		fetch(url).then(res => {
       if(res.ok){
         return res.json();
       }else{
@@ -59,6 +61,7 @@ class Details extends Component {
 	render() {
 		return (
 			<main>
+				<MuiThemeProvider theme={theme}>
 				<div className="row row--details">
 					<span>
 						<span className="lighter">Showing repositories of </span>
@@ -67,13 +70,13 @@ class Details extends Component {
 							{this.props.match.params.name} 
 						</span>
 					</span>
-					<MuiThemeProvider theme={theme}>
+					
 						<Button variant="outlined" color="primary">
 							<Link to={`/${this.props.match.params.org}`} className="button-link">
 								Back to Repositories
 							</Link>
 						</Button>
-					</MuiThemeProvider>
+					
 				</div>
 				{!this.state.error && !this.state.branches &&
           <CircularProgress className="spinner" />
@@ -95,6 +98,7 @@ class Details extends Component {
 						rows={rows}
 					/>
 				}
+				</MuiThemeProvider>
 			</main>
 		);
 	}

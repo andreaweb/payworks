@@ -10,8 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles';
-import { styles } from '../../common/MuiTheme.js';
+import { withStyles,MuiThemeProvider } from '@material-ui/core/styles';
+import { styles,theme } from '../../common/MuiTheme.js';
 import { stableSort, getSorting } from '../../common/sortingTable.js';
 import './Results.scss';
 
@@ -47,6 +47,7 @@ class Results extends Component {
 			<div>
 				{this.props.arr &&
 					<Paper>
+					<MuiThemeProvider theme={theme}>
 						<div className="table-container">
 							<Table aria-labelledby="tableTitle">
 								<TableHead>
@@ -54,7 +55,7 @@ class Results extends Component {
 										{rows.map(row => {
 											return (
 												<TableCell
-													key={row.id}
+													key={`head-${row.id}`}
 													numeric={row.numeric}
 													padding={row.disablePadding ? 'none' : 'default'}
 													sortDirection={orderBy === row.id ? order : false}
@@ -90,14 +91,17 @@ class Results extends Component {
 											return (
 												<TableRow
 													hover
-													key={arrItem.id}
+													key={`row-${arrItem.id ? arrItem.id : arrItem.sha}`}
 													tabIndex={-1}
 													role="checkbox"
 												>
 													{
 														rows.map(
 															(row => 
-															<TableCell key={row.id} numeric={row.numeric}>
+															<TableCell 
+																key={`cell-${row.id}-${arrItem.id ? arrItem.id : arrItem.sha}`} 
+																numeric={row.numeric}
+															>
 																{ //links only for repo.name
 																	row.id === 'name' ?
 																	<Link 
@@ -141,6 +145,7 @@ class Results extends Component {
 							onChangePage={this.handleChangePage}
 							onChangeRowsPerPage={this.handleChangeRowsPerPage}
 						/>
+					</MuiThemeProvider>
 					</Paper>
 				}
 			</div>

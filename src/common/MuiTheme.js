@@ -66,9 +66,7 @@ export const theme = createMuiTheme({
 		}
 	},
 	palette: {
-		primary: { main: '#ffffff' },
-		secondary: { main: '#ff0669' },
-		error: { main: '#ff0669' },
+		primary: { main: '#ffffff' }
 	},
 	typography: { useNextVariants: true },
 });

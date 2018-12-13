@@ -79,9 +79,7 @@ class ModalSearch extends Component {
 }
 
 ModalSearch.propTypes = {
-	handleChange: PropTypes.func.isRequired,
 	fetchRepos: PropTypes.func,
-	org: PropTypes.string,
-	requesting: PropTypes.bool
+	requesting: PropTypes.bool.isRequired
 };
 export default withStyles(styles, { withTheme: true })(ModalSearch);
