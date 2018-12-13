@@ -1,8 +1,3 @@
-const enzyme = require("enzyme");
-const Adapter = require("enzyme-adapter-react-16");
-
-enzyme.configure({ adapter: new Adapter() });
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Results from './Results';
@@ -11,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableCell from '@material-ui/core/TableCell';
-import { shallow,mount } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 
 const rows = [
