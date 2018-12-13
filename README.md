@@ -1,8 +1,13 @@
 # Payworks challenge
 
-Install dependencies with yarn install
+Install dependencies with `yarn install`
 
-Run with yarn start
+Run with `yarn start`
+
+Test (and see coverage) with `yarn test`
+(remove the --coverage flag from package.json to enter watch mode)
+
+**Also available online** <http://clammy-tax.surge.sh/>
 
 ## Tools and Frameworks Used
 
